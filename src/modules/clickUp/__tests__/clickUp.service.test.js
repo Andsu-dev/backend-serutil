@@ -7,7 +7,6 @@ const {
 } = require("../../../core/errors/repository.error");
 const axios = require("axios");
 
-// Mock do axios
 jest.mock("axios", () => ({
   create: jest.fn(() => ({
     get: jest.fn(),
