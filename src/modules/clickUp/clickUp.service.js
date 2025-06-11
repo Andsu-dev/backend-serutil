@@ -99,9 +99,12 @@ class ClickUpService {
     if (!taskId) {
       throw new BadRequestError("Task ID is required");
     }
-    const { id } = await this.taskRepository.findById(taskId);
 
-    if (!id) throw new NotFoundError("Task not exist");
+    const task = await this.taskRepository.findById(taskId);
+
+    if (task === null || task === undefined || !task) {
+      throw new NotFoundError("Task not exist");
+    }
 
     await this.taskRepository.delete(taskId);
     return { message: "Task deleted successfully" };
