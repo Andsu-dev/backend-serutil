@@ -1,3 +1,5 @@
+const { convertTimestampToISO } = require("../../../utils/date.utils");
+
 class ClickUpTask {
   constructor({ id, name, description, status, start_date, due_date }) {
     this.id = id;
@@ -14,8 +16,8 @@ class ClickUpTask {
       name: this.name,
       description: this.description,
       status: this.status,
-      start_date: this.start_date,
-      due_date: this.due_date,
+      start_date: convertTimestampToISO(this.start_date),
+      due_date: convertTimestampToISO(this.due_date),
     };
   }
 

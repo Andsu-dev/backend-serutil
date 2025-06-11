@@ -6,17 +6,22 @@ const {
   NotFoundError,
   BadRequestError,
 } = require("../../core/errors/repository.error");
+const { convertDateToTimestamp } = require("../../utils/date.utils");
 
 class ClickUpService {
-  constructor() {
-    this.client = axios.create({
+  constructor(client, taskRepository) {
+    this.client = client || this._createClient();
+    this.taskRepository = taskRepository || new ClickUpTaskRepository();
+  }
+
+  _createClient() {
+    return axios.create({
       baseURL: clickUpConfig.baseUrl,
       headers: {
         Authorization: clickUpConfig.apiKey,
         "Content-Type": "application/json",
       },
     });
-    this.taskRepository = new ClickUpTaskRepository();
   }
 
   async findAll() {
@@ -68,10 +73,10 @@ class ClickUpService {
       description: taskData.description || "",
       status: taskData.status || "to do",
       start_date: taskData.start_date
-        ? new Date(taskData.start_date).getTime()
+        ? convertDateToTimestamp(taskData.start_date)
         : null,
       due_date: taskData.due_date
-        ? new Date(taskData.due_date).getTime()
+        ? convertDateToTimestamp(taskData.due_date)
         : null,
     };
 
