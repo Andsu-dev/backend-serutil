@@ -18,4 +18,31 @@ const timestampToDate = (obj) => {
   }, {});
 };
 
-module.exports = timestampToDate;
+const convertDateToTimestamp = (dateInput) => {
+  if (typeof dateInput === "number") {
+    return dateInput;
+  }
+  const date = new Date(dateInput);
+
+  if (isNaN(date.getTime())) {
+    throw new BadRequestError(`Invalid date format: ${dateInput}`);
+  }
+
+  return date.getTime();
+};
+
+const convertTimestampToISO = (timestamp) => {
+  if (!timestamp) return null;
+  try {
+    return new Date(Number(timestamp)).toISOString();
+  } catch (error) {
+    console.error("Error converting timestamp to ISO:", error);
+    return timestamp;
+  }
+};
+
+module.exports = {
+  timestampToDate,
+  convertDateToTimestamp,
+  convertTimestampToISO,
+};

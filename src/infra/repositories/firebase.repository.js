@@ -17,7 +17,7 @@ const {
   DocumentNotFoundError,
   DuplicateKeyError,
 } = require("../../core/errors/repository.error");
-const timestampToDate = require("../../utils/date.utils");
+const { timestampToDate } = require("../../utils/date.utils");
 
 class FirebaseRepository extends RepositoryInterface {
   constructor(collectionName) {
