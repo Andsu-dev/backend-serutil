@@ -67,8 +67,12 @@ class ClickUpService {
       name: taskData.name,
       description: taskData.description || "",
       status: taskData.status || "to do",
-      start_date: taskData.start_date || null,
-      due_date: taskData.due_date || null,
+      start_date: taskData.start_date
+        ? new Date(taskData.start_date).getTime()
+        : null,
+      due_date: taskData.due_date
+        ? new Date(taskData.due_date).getTime()
+        : null,
     };
 
     const { data } = await this.client.post(
