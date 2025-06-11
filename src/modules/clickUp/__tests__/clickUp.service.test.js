@@ -46,6 +46,7 @@ describe("ClickUpService", () => {
       setDoc: jest.fn(),
       findById: jest.fn(),
       delete: jest.fn(),
+      findAll: jest.fn(),
     };
 
     axios.create.mockReturnValue(mockAxios);
