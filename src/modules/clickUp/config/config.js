@@ -12,8 +12,8 @@ if (!clickUpConfig.apiKey) {
   throw new Error("CLICKUP_API_KEY environment variable is required");
 }
 
-if (!clickUpConfig.clientId) {
-  throw new Error("CLICKUP_CLIENT_ID environment variable is required");
+if (!clickUpConfig.listId) {
+  throw new Error("CLICKUP_LIST_ID environment variable is required");
 }
 
 module.exports = { clickUpConfig };
