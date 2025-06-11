@@ -2,8 +2,8 @@ const ClickUpService = require("./clickUp.service");
 const asyncHandler = require("../../utils/asyncHandler");
 
 class ClickUpController {
-  constructor() {
-    this.clickUpService = new ClickUpService();
+  constructor(clickUpService = new ClickUpService()) {
+    this.clickUpService = clickUpService;
   }
 
   findAll = asyncHandler(async (req, res) => {
