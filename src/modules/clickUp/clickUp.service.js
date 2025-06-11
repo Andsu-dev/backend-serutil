@@ -25,29 +25,38 @@ class ClickUpService {
   }
 
   async findAll() {
-    const { data } = await this.client.get(
-      `/list/${clickUpConfig.listId}/task`
-    );
+    try {
+      const { data } = await this.client.get(
+        `/list/${clickUpConfig.listId}/task`
+      );
 
-    if (!data.tasks) {
-      throw new NotFoundError("Not have tasks");
+      if (!data.tasks) {
+        throw new NotFoundError("Not have tasks");
+      }
+
+      const { tasks } = data;
+
+      const savedTasks = await Promise.all(
+        tasks.map(async (task) => {
+          const doc = ClickUpTask.fromClickUpResponse(task);
+          const savedTask = await this.taskRepository.setDoc(
+            doc?.id,
+            doc.toJSON()
+          );
+          return savedTask;
+        })
+      );
+
+      return savedTasks;
+    } catch (error) {
+      const tasks = await this.taskRepository.findAll({});
+      if (!tasks || tasks.length === 0) {
+        throw new NotFoundError("No tasks found");
+      }
+      return tasks;
     }
-
-    const { tasks } = data;
-
-    const savedTasks = await Promise.all(
-      tasks.map(async (task) => {
-        const doc = ClickUpTask.fromClickUpResponse(task);
-        const savedTask = await this.taskRepository.setDoc(
-          doc?.id,
-          doc.toJSON()
-        );
-        return savedTask;
-      })
-    );
-
-    return savedTasks;
   }
+
   async findOne(taskId) {
     if (!taskId) {
       throw new BadRequestError("Task id is required");
