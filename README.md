@@ -100,6 +100,16 @@ O Swagger UI fornece:
 
 ## 🚀 Endpoints da API
 
+Para facilitar os testes da API, você pode importar a collection do Postman que contém todas as rotas configuradas:
+
+[Collection Postman - API ClickUp Integration](https://dark-resonance-903811.postman.co/workspace/testes~ab90c03e-4f04-454e-a558-588a4099c7cd/collection/41479781-64b76c63-5571-4295-9f31-d3dc3567b9d2?action=share&creator=41479781&active-environment=41479781-85fd4e36-03cf-4725-8c01-56e1e1fc9133)
+
+A collection inclui:
+
+- Todas as rotas da API configuradas
+- Exemplos de payloads
+- Headers necessários
+
 ### GET /tasks
 
 Consulta todas as tarefas da lista do ClickUp e sincroniza com o armazenamento local.
